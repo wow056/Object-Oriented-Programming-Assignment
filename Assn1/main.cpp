@@ -35,7 +35,6 @@ int main()
 
 int Menu()
 {
-	int input;
 	cout << "----------MENU----------\n";
 	cout << "1. Add Movie\n";
 	cout << "2. Print List\n";
@@ -43,11 +42,6 @@ int Menu()
 	cout << "4. Pivot Chart\n";
 	cout << "5. Exit\n";
 	cout << "------------------------\n";
-	do
-	{
-		cout << "Selection: ";
-		cin >> input;
-	} while ((input < 1) || (input > 5));
-	return input;
+	return inputInRange(1, 5);
 }
 

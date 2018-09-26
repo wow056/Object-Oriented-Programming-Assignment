@@ -3,6 +3,7 @@
 
 #include "Chart.h"
 #include "MovieList.h"
+#include "input.h"
 
 class Pivot
 {

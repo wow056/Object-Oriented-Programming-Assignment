@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chart.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="movie.h" />
     <ClInclude Include="MovieList.h" />

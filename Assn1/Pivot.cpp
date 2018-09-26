@@ -154,22 +154,14 @@ void Pivot::SetMode()
 	cout << "3. Genre and Source\n";
 	cout << "4. Source and Genre\n";
 	cout << "----------------------------\n";
-	do
-	{
-		cout << "Selection: ";
-		cin >> category_mode;
-	} while ((category_mode < 1) || (category_mode > 4));
+	category_mode = inputInRange(1, 4);
 
 	cout << "----------Figure----------\n";
 	cout << "1. Production\n";
 	cout << "2. Gross\n";
 	cout << "3. Rating\n";
 	cout << "--------------------------\n";
-	do
-	{
-		cout << "Selection: ";
-		cin >> figure_mode;
-	} while ((figure_mode < 1) || (figure_mode > 3));
+	figure_mode = inputInRange(1, 3);
 
 	cout << "----------Function----------\n";
 	cout << "1. Average\n";
@@ -177,11 +169,7 @@ void Pivot::SetMode()
 	cout << "3. Max\n";
 	cout << "4. Min\n";
 	cout << "----------------------------\n";
-	do
-	{
-		cout << "Selection: ";
-		cin >> function_mode;
-	} while ((function_mode < 1) || (function_mode > 4));
+	function_mode = inputInRange(1, 4);
 
 	CategorizedMovie::setCalculationMode(figure_mode, function_mode);
 	return;
