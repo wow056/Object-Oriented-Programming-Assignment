@@ -2,7 +2,7 @@
 #define CHART_H
 
 #include "MovieList.h"
-#include <map>
+#include "input.h"
 
 class chartData
 {

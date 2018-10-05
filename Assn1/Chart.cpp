@@ -72,14 +72,14 @@ void Chart::print_body() const
 			symbol = get_genre_symbol(it->genre);
 			break;
 		case 2:
-			symbol = to_string(get_source_symbol(it->source));
+			symbol = itos(get_source_symbol(it->source));
 			break;
 		case 3:
 			symbol = get_genre_symbol(it->genre);
-			symbol += to_string(get_source_symbol(it->source));
+			symbol += itos(get_source_symbol(it->source));
 			break;
 		case 4:
-			symbol = to_string(get_source_symbol(it->source));
+			symbol = itos(get_source_symbol(it->source));
 			symbol += get_genre_symbol(it->genre);
 			break;
 		default:

@@ -2,10 +2,12 @@
 #define INPUT_H
 
 #include <iostream>
+#include <sstream>
+#include <string>
+using namespace std;
 
 inline int inputInRange(const int &lower, const int &upper)
 {
-	using namespace std;
 	int input;
 	while (true)
 	{
@@ -22,5 +24,13 @@ inline int inputInRange(const int &lower, const int &upper)
 		}
 	}
 }
+
+inline string itos(int i)
+{
+	ostringstream convert;
+	convert << i;
+	return convert.str();
+}
+
 
 #endif // !INPUT_H
