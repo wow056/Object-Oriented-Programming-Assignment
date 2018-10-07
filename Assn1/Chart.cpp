@@ -86,6 +86,25 @@ void Chart::print_body() const
 		for (int i = 0; i < stick_num; i++)
 			cout << '=';
 		cout << it->data << '\n';
+		if (it != chart_data.end())
+		{
+			if (::next(it) != chart_data.end())
+			{
+				switch (mode)
+				{
+				case 3:
+					if (it->genre != ::next(it)->genre)
+						cout << "  |\n";
+					break;
+				case 4:
+					if(it->source != ::next(it)->source)
+						cout << "  |\n";
+					break;
+				default:
+					break;
+				}
+			}
+		}
 	}
 }
 
