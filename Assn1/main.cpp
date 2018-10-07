@@ -4,7 +4,7 @@
 int main()
 {
 	MovieList movie_list;
-	Pivot pivot;
+	Pivot *pivot;
 	while (true)
 	{
 		switch (Menu())
@@ -18,14 +18,14 @@ int main()
 			movie_list.Print();
 			break;
 		case 3:
-			pivot.SetMode();
-			pivot.Categorize(movie_list);
-			pivot.ShowTable();
+			pivot = new Pivot(movie_list);
+			pivot->ShowTable();
+			delete pivot;
 			break;
 		case 4:
-			pivot.SetMode();
-			pivot.Categorize(movie_list);
-			pivot.ShowChart();
+			pivot = new Pivot(movie_list);
+			pivot->ShowChart();
+			delete pivot;
 			break;
 		case 5:
 			return 0;

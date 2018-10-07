@@ -9,17 +9,13 @@ int Chart::numOfStick(const double &val) const
 {
 	int result;
 	double interbal = (max_val - min_val) / 20;
-	if (min_val == max_val)
+	if (val == max_val)
 	{
 		return 20;
 	}
 	else if (val == min_val)
 	{
 		return 0;
-	}
-	else if (val == max_val)
-	{
-		return 20;
 	}
 	else
 	{

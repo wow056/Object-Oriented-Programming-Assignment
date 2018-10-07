@@ -4,118 +4,38 @@ void Pivot::Categorize(const MovieList & movie_list)
 {
 	list<Movie>::const_iterator movie_it;
 	list<CategorizedMovie>::iterator list_it;
-	categorized_list.clear();
-	switch (category_mode)
+	for (movie_it = movie_list.data.begin(); movie_it != movie_list.data.end(); movie_it++)
 	{
-	case 1:
-		for (movie_it = movie_list.data.begin(); movie_it != movie_list.data.end(); movie_it++)
+		list_it = FindCategory(*movie_it);
+		if (list_it == categorized_list.end())
 		{
-			for (list_it = categorized_list.begin(); list_it != categorized_list.end(); list_it++)
-			{
-				if (list_it->category.front() == movie_it->genre)
-				{
-					list_it->movies.push_back(*movie_it);
-					break;
-				}
-			}
-			if (list_it == categorized_list.end())
-			{
-				CategorizedMovie new_list;
-				new_list.category.push_back(movie_it->genre);
-				new_list.movies.push_back(*movie_it);
-				categorized_list.push_back(new_list);
-			}
+			AddNewCategory(*movie_it);
 		}
-		break;
-	case 2:
-		for (movie_it = movie_list.data.begin(); movie_it != movie_list.data.end(); movie_it++)
+		else
 		{
-			for (list_it = categorized_list.begin(); list_it != categorized_list.end(); list_it++)
-			{
-				if (list_it->category.front() == movie_it->source)
-				{
-					list_it->movies.push_back(*movie_it);
-					break;
-				}
-			}
-			if (list_it == categorized_list.end())
-			{
-				CategorizedMovie new_list;
-				new_list.category.push_back(movie_it->source);
-				new_list.movies.push_back(*movie_it);
-				categorized_list.push_back(new_list);
-			}
-		}
-		break;
-	case 3:
-		for (movie_it = movie_list.data.begin(); movie_it != movie_list.data.end(); movie_it++)
-		{
-			for (list_it = categorized_list.begin(); list_it != categorized_list.end(); list_it++)
-			{
-				if (list_it->category.front() == movie_it->genre)
-				{
-					if (list_it->category.back() == movie_it->source)
-					{
-						list_it->movies.push_back(*movie_it);
-						break;
-					}
-				}
-			}
-			if (list_it == categorized_list.end())
-			{
-				CategorizedMovie new_list;
-				new_list.category.push_back(movie_it->genre);
-				new_list.category.push_back(movie_it->source);
-				new_list.movies.push_back(*movie_it);
-				categorized_list.push_back(new_list);
-			}
-		}
-		break;
-	case 4:
-		for (movie_it = movie_list.data.begin(); movie_it != movie_list.data.end(); movie_it++)
-		{
-			for (list_it = categorized_list.begin(); list_it != categorized_list.end(); list_it++)
-			{
-				if (list_it->category.front() == movie_it->source)
-				{
-					if (list_it->category.back() == movie_it->genre)
-					{
-						list_it->movies.push_back(*movie_it);
-						break;
-					}
-				}
-			}
-			if (list_it == categorized_list.end())
-			{
-				CategorizedMovie new_list;
-				new_list.category.push_back(movie_it->source);
-				new_list.category.push_back(movie_it->genre);
-				new_list.movies.push_back(*movie_it);
-				categorized_list.push_back(new_list);
-			}
+			list_it->movies.push_back(*movie_it);
 		}
 	}
 	categorized_list.sort();
 }
 
-void Pivot::ShowTable()
+void Pivot::ShowTable() const
 {
 	switch (category_mode)
 	{
 	case 1:
-		cout << "Genre";
+		cout << "Genre\t";
 		break;
 	case 2:
-		cout << "Source";
+		cout << "Source\t";
 		break;
 	case 3:
-		cout << "Genre\tSource";
+		cout << "Genre\tSource\t";
 		break;
 	case 4:
-		cout << "Source\tGenre";
+		cout << "Source\tGenre\t";
 		break;
 	}
-	cout << "\t";
 	switch (figure_mode)
 	{
 	case 1:
@@ -128,9 +48,9 @@ void Pivot::ShowTable()
 		cout << "Rating\n";
 		break;
 	}
-	for (list<CategorizedMovie>::iterator it1 = categorized_list.begin(); it1 != categorized_list.end(); it1++)
+	for (list<CategorizedMovie>::const_iterator it1 = categorized_list.begin(); it1 != categorized_list.end(); it1++)
 	{
-		for (list<string>::iterator it2 = it1->category.begin(); it2 != it1->category.end(); it2++)
+		for (list<string>::const_iterator it2 = it1->category.begin(); it2 != it1->category.end(); it2++)
 		{
 			cout << *it2 << '\t';
 		}
@@ -145,6 +65,78 @@ void Pivot::ShowChart() const
 }
 
 
+
+list<CategorizedMovie>::iterator Pivot::FindCategory(const Movie & movie)
+{
+	list<CategorizedMovie>::iterator it = categorized_list.begin();
+	while (it != categorized_list.end())
+	{
+		switch (category_mode)
+		{
+		case 1:
+			if (it->category.front() == movie.genre)
+			{
+				return it;
+			}
+			break;
+		case 2:
+			if (it->category.front() == movie.source)
+			{
+				return it;
+			}
+			break;
+		case 3:
+			if (it->category.front() == movie.genre)
+			{
+				if (it->category.back() == movie.source)
+				{
+					return it;
+				}
+			}
+			break;
+		case 4:
+			if (it->category.front() == movie.source)
+			{
+				if (it->category.back() == movie.genre)
+				{
+					return it;
+				}
+			}
+			break;
+		}
+		it++;
+	}
+	return it;
+}
+
+void Pivot::AddNewCategory(const Movie & movie)
+{
+	CategorizedMovie new_list;
+	switch (category_mode)
+	{
+	case 1:
+		new_list.category.push_back(movie.genre);
+		break;
+	case 2:
+		new_list.category.push_back(movie.source);
+		break;
+	case 3:
+		new_list.category.push_back(movie.genre);
+		new_list.category.push_back(movie.source);
+		break;
+	case 4:
+		new_list.category.push_back(movie.source);
+		new_list.category.push_back(movie.genre);
+		break;
+	}
+	categorized_list.push_back(new_list);
+}
+
+Pivot::Pivot(const MovieList &movie_list)
+{
+	SetMode();
+	Categorize(movie_list);
+}
 
 void Pivot::SetMode()
 {

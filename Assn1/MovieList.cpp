@@ -20,7 +20,7 @@ void MovieList::Add()
 	cout << "Rating: ";
 	cin >> input_data.rating;
 
-	if (find(data.begin(), data.end(), input_data) == data.end())
+	if (find(data.begin(), data.end(), input_data.name) == data.end())
 	{
 		data.push_back(input_data);
 		cout << "Movie is added!" << endl;
@@ -36,7 +36,12 @@ void MovieList::Print()
 	cout << "Name\tGenre\tSource\tProduction\tGross\tRating\n";
 	for (list<Movie>::iterator it = data.begin(); it != data.end(); it++)
 	{
-		cout << it->name << "\t" << it->genre << "\t" << it->source << "\t" << it->production << "\t" << it->gross << "\t" << it->rating << endl;
+		cout << it->name << "\t"
+			<< it->genre << "\t"
+			<< it->source << "\t"
+			<< it->production << "\t"
+			<< it->gross << "\t"
+			<< it->rating << "\n";
 	}
 }
 
@@ -126,11 +131,6 @@ double CategorizedMovie::getCalculationResult() const
 	case 4:
 		return getMinMovieData();
 	}
-}
-
-int CategorizedMovie::getFigureMode() const
-{
-	return figure_mode;
 }
 
 bool CategorizedMovie::operator<(const CategorizedMovie & p) const
