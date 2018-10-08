@@ -159,8 +159,6 @@ Chart::Chart(const list<CategorizedMovie>& categorized_movie_list, const int& ca
 	if (!categorized_movie_list.empty())
 	{
 		mode = category_mode;
-		char genre_symbol = 'A';
-		int source_symbol = 0;
 		string previous_genre = categorized_movie_list.front().movies.front().genre;
 		string previous_source = categorized_movie_list.front().movies.front().genre;
 
