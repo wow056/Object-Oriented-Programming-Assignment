@@ -32,8 +32,8 @@ private:
 	static int function_mode;//function(1 = average, 2 = sum, 3 = max, 4 = min)
 	static double addMovieData(const double &accumulated, const Movie &m);//accumulate 함수를 사용하기 위한 함수, figure_mode에 따라 다른 연산을 한다.
 	static bool compMovieData(const Movie &m1, const Movie &m2);//max_element, min_element 함수를 사용하기 위한 함수, figure_mode에 따라 다른 연산을 한다.
-	double getMaxMovieData() const;//Chart 클래스에서 사용하기 위한 함수, figure_mode에 따라 다른 멤버의 최댓값을 구한다.
-	double getMinMovieData() const;//Chart 클래스에서 사용하기 위한 함수, figure_mode에 따라 다른 멤버의 최솟값을 구한다.
+	double getMaxMovieData() const;//getCalculationResult 함수에서 사용한다. figure_mode에 따라 다른 멤버의 최댓값을 구한다.
+	double getMinMovieData() const;//getCalculationResult 함수에서 사용한다. figure_mode에 따라 다른 멤버의 최솟값을 구한다.
 public:
 	bool operator<(const CategorizedMovie &p) const; //영화 종류를 앞에서부터 대소문자 상관없이 비교하는 연산자
 	static void setCalculationMode(int figure_mode, int function_mode); //figure_mode와 function_mode를 설정한다.
