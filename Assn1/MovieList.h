@@ -10,6 +10,20 @@
 
 using namespace std;
 
+class MovieNameComparer
+{
+	string name;
+public:
+	MovieNameComparer(const string &movie_name)
+		:name(movie_name) {}
+	MovieNameComparer(const Movie &movie)
+		:name(movie.name) {}
+	bool operator()(const Movie &movie)
+	{
+		return name == movie.name;
+	}
+};
+
 //class MovieList
 //입력받은 Movie 정보를 분류하지 않고 그 순서대로 list에 저장함.
 class MovieList

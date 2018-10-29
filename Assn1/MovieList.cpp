@@ -20,7 +20,7 @@ void MovieList::Add()
 	cout << "Rating: ";
 	cin >> input_data.rating;
 
-	if (find(data.begin(), data.end(), input_data.name) == data.end())
+	if (find_if(data.begin(), data.end(), MovieNameComparer(input_data)) == data.end())
 	{
 		data.push_back(input_data);
 		cout << "Movie is added!" << endl;

@@ -15,11 +15,6 @@ public:
 	double production;
 	double gross;
 	double rating;
-
-	bool operator==(const string &input_name) const//비교연산자는 같은 이름의 영화가 입력되는 것을 방지하기 위해 구현해두었습니다.
-	{
-		return this->name == input_name;
-	}
 };
 
 #endif // !MOVIE_H
