@@ -63,6 +63,11 @@ void Game::showPalette() const
 		if (cursor_pos.changedLine())
 			cout << endl;
 	}
+	while (cursor_pos.y < palette_size.y)
+	{
+		cursor_pos.y++;
+		cout << endl;
+	}
 }
 
 

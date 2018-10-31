@@ -40,7 +40,7 @@ bool Word::load_word_file(const string & file_name, string word_source[], const 
 		return false;
 	int index = 0;
 	srand(time(NULL));
-	while (getline(file, buffer), index < n)
+	while ((getline(file, buffer)) && (index < n))
 	{
 		word_source[index] = buffer;
 		index++;
