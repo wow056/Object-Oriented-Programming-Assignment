@@ -1,17 +1,25 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <iostream>
+
+using namespace std;
+
 class Player {
 public:
-	Player();
+	enum { FullHealth = 100 };
+	Player() 
+		:health(FullHealth), score(0) {}
 	void increaseHealth(int value);
 	void decreaseHealth(int value);
 	void increaseScore(int value);
 	void decreaseScore(int value);
-	void die();
 	bool isAlive() const;
+	void printInfo() const;
+	int getScore() const;
 private:
-	
+	int health;
+	int score;
 };
 
 #endif // !PLAYER_H
