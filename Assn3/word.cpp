@@ -1,5 +1,7 @@
 #include "word.h"
 
+int Word::cmp_position::count = 0;
+
 void Word::pop(Player & player)
 {
 	expire();
@@ -32,7 +34,7 @@ void DeathBombWord::pop(Player & player)
 	player.decreaseHealth(100);
 }
 
-bool Word::load_word_file(const string & file_name, string word_source[], const int n)
+bool Word::load_word_file(const char* file_name, string word_source[], const int n)
 {
 	string buffer;
 	ifstream file(file_name);
@@ -40,7 +42,7 @@ bool Word::load_word_file(const string & file_name, string word_source[], const 
 		return false;
 	int index = 0;
 	srand(time(NULL));
-	while ((getline(file, buffer)) && (index < n))
+	while ((file >> buffer) && (index < n))
 	{
 		word_source[index] = buffer;
 		index++;
@@ -148,9 +150,9 @@ int Word::length() const
 
 
 
-void Word::print() const
+void Word::print(ostream & os) const
 {
-	cout << name;
+	os << name;
 }
 
 int HealingWord::length() const
@@ -158,11 +160,11 @@ int HealingWord::length() const
 	return Word::length() + 2;
 }
 
-void HealingWord::print() const
+void HealingWord::print(ostream & os) const
 {
-	cout << '(';
-	Word::print();
-	cout << ')';
+	os << '(';
+	Word::print(os);
+	os << ')';
 }
 
 int BombWord::length() const
@@ -170,11 +172,11 @@ int BombWord::length() const
 	return Word::length() + 2;
 }
 
-void BombWord::print() const
+void BombWord::print(ostream & os) const
 {
-	cout << '<';
-	Word::print();
-	cout << '>';
+	os << '<';
+	Word::print(os);
+	os << '>';
 }
 
 int CompleteHealingWord::length() const
@@ -192,11 +194,11 @@ bool CompleteHealingWord::vanished() const
 	return (count <= 0) || HealingWord::vanished();
 }
 
-void CompleteHealingWord::print() const
+void CompleteHealingWord::print(ostream & os) const
 {
-	cout << "((";
-	Word::print();
-	cout << '(' << count << ")))";
+	os << "((";
+	Word::print(os);
+	os << '(' << count << ")))";
 }
 
 int DeathBombWord::length() const
@@ -214,9 +216,9 @@ bool DeathBombWord::vanished() const
 	return (count <= 0) || BombWord::vanished();
 }
 
-void DeathBombWord::print() const
+void DeathBombWord::print(ostream & os) const
 {
-	cout << "<<";
-	Word::print();
-	cout << '(' << count << ")))";
+	os << "<<";
+	Word::print(os);
+	os << '(' << count << ")>>";
 }

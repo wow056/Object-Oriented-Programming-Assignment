@@ -15,7 +15,7 @@ public:
 	void increaseScore(int value);
 	void decreaseScore(int value);
 	bool isAlive() const;
-	void printInfo() const;
+	void printInfo(ostream &os) const;
 	int getScore() const;
 private:
 	int health;

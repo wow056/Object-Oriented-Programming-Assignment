@@ -26,8 +26,10 @@ using namespace std;
 class Game
 {
 private:
+	ostream *output_stream;
+	istream *input_stream;
 	enum { LoadedWordCount = 20, InGameWordCount = 10 };
-	const static string WordListFileName;
+	static const char *WordListFileName;
 	const Position palette_size;
 	string* word_source;
 	list<Word*> word_list;
@@ -38,7 +40,7 @@ private:
 	void showPalette() const;
 	void update_list(list<string> &previous_word_list);
 public:
-	Game();
+	Game(ostream &game_output_stream, istream &game_input_stream);
 	void start();
 	~Game();
 };

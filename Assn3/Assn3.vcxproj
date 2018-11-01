@@ -117,6 +117,9 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include="Makefile">
+      <FileType>Document</FileType>
+    </None>
     <ClCompile Include="player.cpp" />
     <ClCompile Include="word.cpp" />
   </ItemGroup>

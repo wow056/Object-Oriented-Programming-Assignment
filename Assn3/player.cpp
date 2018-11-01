@@ -46,9 +46,9 @@ bool Player::isAlive() const
 	return health > 0;
 }
 
-void Player::printInfo() const
+void Player::printInfo(ostream & os) const
 {
-	cout << "health: " << health << "\t\t\t\t\t\t\t\tscore: " << score;
+	os << "health: " << health << "\t\t\t\t\t\t\t\tscore: " << score;
 }
 
 int Player::getScore() const

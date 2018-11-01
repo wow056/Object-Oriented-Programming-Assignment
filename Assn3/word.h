@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
-#include "Player.h"
+#include "player.h"
 
 using namespace std;
 
@@ -56,7 +56,7 @@ private:
 class Word
 {
 private:
-
+	
 	string name;
 	Position pos;
 	bool available_flag;
@@ -67,14 +67,23 @@ protected:
 	virtual void expire() { available_flag = false; }
 public:
 	Word(const std::string &word_loaded, const Position pos) :name(word_loaded), pos(pos), available_flag(true) {}
-	static bool load_word_file(const string &file_name, string word_source[], const int n);
+	static bool load_word_file(const char *file_name, string word_source[], const int n);
 	static void push_word(list<Word*> &word_list, const string word_source[], int n, const Position & palette_size, const list<string> & previous_word_list = list<string>());
 	static void fill_word(list<Word*> &word_list, const string word_source[], const int maximum_word_num, const int n, const Position & palette_size, const list<string> & previous_word_list = list<string>());
-	struct cmp_position
+	class cmp_position
 	{
+		static int count;
+	public:
 		bool operator()(const Word *w1, const Word *w2) const
 		{
+			count++;
 			return w1->getPos() < w2->getPos();
+		}
+		static int pop_count()
+		{
+			int return_val = count;
+			count = 0;
+			return return_val;
 		}
 	};
 	class compare_word_with_name
@@ -95,7 +104,7 @@ public:
 	virtual const Position& getPos() const;
 	virtual int length() const;
 	virtual void pop(Player &player);
-	virtual void print() const;
+	virtual void print(ostream & os) const;
 };
 
 class HealingWord : public Word
@@ -103,7 +112,7 @@ class HealingWord : public Word
 public:
 	HealingWord(const std::string &word_loaded, const Position pos) :Word(word_loaded, pos) {}
 	virtual int length() const;
-	virtual void print() const;
+	virtual void print(ostream & os) const;
 	virtual void pop(Player &player);
 };
 
@@ -112,7 +121,7 @@ class BombWord : public Word
 public:
 	BombWord(const std::string &word_loaded, const Position pos) :Word(word_loaded, pos) {}
 	virtual int length() const;
-	virtual void print() const;
+	virtual void print(ostream & os) const;
 	virtual void pop(Player &player);
 };
 
@@ -125,7 +134,7 @@ public:
 	virtual int length() const;
 	virtual void decreaseCount();
 	virtual bool vanished() const;
-	virtual void print() const;
+	virtual void print(ostream & os) const;
 	virtual void pop(Player &player);
 };
 
@@ -138,7 +147,7 @@ public:
 	virtual int length() const;
 	virtual void decreaseCount();
 	virtual bool vanished() const;
-	virtual void print() const;
+	virtual void print(ostream & os) const;
 	virtual void pop(Player &player);
 };
 
