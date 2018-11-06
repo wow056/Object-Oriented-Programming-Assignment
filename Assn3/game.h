@@ -4,7 +4,6 @@
 
 #include <list>
 #include <string>
-#include <iostream>
 #include <fstream>
 #include <algorithm>
 #include "player.h"
@@ -26,23 +25,27 @@ using namespace std;
 class Game
 {
 private:
-	ostream *output_stream;
-	istream *input_stream;
-	enum { LoadedWordCount = 20, InGameWordCount = 10 };
-	static const char *WordListFileName;
-	const Position palette_size;
-	string* word_source;
-	list<Word*> word_list;
-	Player player;
+	ostream *output_stream;				//Get output stream as member to debug easily
+	enum
+	{
+		LoadedWordCount = 20,			//Number of words loaded from word list file
+		InGameWordCount = 10			//Number of words shown in game
+	};
+	static const char *WordListFileName;//Name of word list file
+	const Position palette_size;		//Size of screen of words
+	string* word_source;				//Array of loaded word from word list file
+	list<Word*> word_list;				//List of words shown in game
+	Player player;						//object of player information
 
-	void main_loop();
-	void printScreen() const;
-	void showPalette() const;
-	void update_list(list<string> &previous_word_list);
+	void main_loop();					//Repeat loop until the game is end
+	void printScreen() const;			//Print game screen into output stream
+
+	void showPalette() const;							//Print screen of words
+	void update_list();	//Update word list when an iteration in main loop is ended.
 public:
-	Game(ostream &game_output_stream, istream &game_input_stream);
-	void start();
-	~Game();
+	Game(ostream *game_output_stream = &cout);	//Constructor: load word_source and set input-output stream
+	void start();	//start game: call main_loop
+	~Game();		//Destructor: deallocate word_source
 };
 
 #endif // !GAME_H

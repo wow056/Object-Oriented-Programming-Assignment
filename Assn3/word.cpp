@@ -58,12 +58,13 @@ void Word::push_word(list<Word*>& word_list, const string word_source[], int n, 
 
 	while (true)
 	{
-		selected_word = word_source[rand() % n];
-		if (find_if(word_list.begin(), word_list.end(), compare_word_with_name(selected_word)) == word_list.end())
-			if (find(previous_word_list.begin(), previous_word_list.end(), selected_word) == previous_word_list.end())
-				break;
+		selected_word = word_source[rand() % n];	//select random word
+		if (find_if(word_list.begin(), word_list.end(), compare_word_with_name(selected_word)) == word_list.end())	//if it does not exist in word_list
+			if (find(previous_word_list.begin(), previous_word_list.end(), selected_word) == previous_word_list.end())	//if it does not exist in previous_word_list
+				break;	//use this word
 	}
 
+	//it has different length according to word class type
 	word_length = selected_word.length();
 	if (word_class_selector >= 4 && word_class_selector < 8)
 		word_length += 2;
@@ -109,13 +110,13 @@ Position Word::find_good_place(const list<Word*>& word_list, const Position & pa
 	do
 	{
 		is_good = true;
-		p.x = rand() % (palette_size.x - word_size);
+		p.x = rand() % (palette_size.x - word_size);	//randomly set coordinate
 		p.y = rand() % palette_size.y;
-		for (list<Word*>::const_iterator it = word_list.begin(); it != word_list.end(); it++)
+		for (list<Word*>::const_iterator it = word_list.begin(); it != word_list.end(); it++)	//for all elements in word_list
 		{
 			int word_start_x = (*it)->pos.x;
 			int word_end_x = (*it)->pos.x + (*it)->length();
-			if (p.y == (*it)->pos.y)
+			if (p.y == (*it)->pos.y)	//if new word overlays on them
 			{
 				if (p.x - 1 >= word_start_x && p.x - 1 <= word_end_x)
 				{
@@ -131,33 +132,28 @@ Position Word::find_good_place(const list<Word*>& word_list, const Position & pa
 				{
 					is_good = false;
 					break;
-				}
+				}	//set coordinate again	
 			}
 		}
-	} while (!is_good);
+	} while (!is_good);	//until it does not overlay to all elements
 	return p;
 }
 
-const Position & Word::getPos() const
+Position Word::getPos() const
 {
 	return pos;
 }
 
 int Word::length() const
 {
-	return name.length();
+	ostringstream temporary_stream;
+	print(temporary_stream);
+	return temporary_stream.str().length();
 }
-
-
 
 void Word::print(ostream & os) const
 {
 	os << name;
-}
-
-int HealingWord::length() const
-{
-	return Word::length() + 2;
 }
 
 void HealingWord::print(ostream & os) const
@@ -167,11 +163,6 @@ void HealingWord::print(ostream & os) const
 	os << ')';
 }
 
-int BombWord::length() const
-{
-	return Word::length() + 2;
-}
-
 void BombWord::print(ostream & os) const
 {
 	os << '<';
@@ -179,19 +170,11 @@ void BombWord::print(ostream & os) const
 	os << '>';
 }
 
-int CompleteHealingWord::length() const
-{
-	return Word::length() + 7;
-}
-
-void CompleteHealingWord::decreaseCount()
+void CompleteHealingWord::update()
 {
 	count--;
-}
-
-bool CompleteHealingWord::vanished() const
-{
-	return (count <= 0) || HealingWord::vanished();
+	if (count <= 0)
+		expire();
 }
 
 void CompleteHealingWord::print(ostream & os) const
@@ -201,19 +184,11 @@ void CompleteHealingWord::print(ostream & os) const
 	os << '(' << count << ")))";
 }
 
-int DeathBombWord::length() const
-{
-	return Word::length() + 7;
-}
-
-void DeathBombWord::decreaseCount()
+void DeathBombWord::update()
 {
 	count--;
-}
-
-bool DeathBombWord::vanished() const
-{
-	return (count <= 0) || BombWord::vanished();
+	if (count <= 0)
+		expire();
 }
 
 void DeathBombWord::print(ostream & os) const

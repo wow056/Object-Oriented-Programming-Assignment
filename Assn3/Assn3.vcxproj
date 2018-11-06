@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include="ClassDiagram.cd" />
     <None Include="Makefile">
       <FileType>Document</FileType>
     </None>

@@ -1,24 +1,23 @@
+/*Assn3
+2018-11-02
+20170225 Kang Minsu
+I completed this take-home programming exam without help of anybody else.
+*/
+
 #include "game.h"
+#include <iostream>
+
 
 int main()
 {
 
 #ifdef DEBUG_MODE
-	ofstream log_file("log.txt",ofstream::ate);
-	ifstream input_file("input_file.txt");
-	if (!input_file)
-	{
-		cerr << "No input stream" << endl;
-	}
-	else
-	{
-		Game game(log_file, input_file);
-		game.start();
-	}
+	ofstream log_file("log.txt");
+	Game game(&log_file);
+	game.start();
 	log_file.close();
-	input_file.close();
 #else
-	Game game(cout, cin);
+	Game game;
 	game.start();
 #endif
 	return 0;

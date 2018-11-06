@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Game">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Game::__unnamed_enum_00a2_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>game.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAUAgYAAIAAAAAAiAAAADCAAAAAAgAAA=</HashCode>
+      <FileName>game.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="palette_size" />
+      <Field Name="player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Player">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Player::__unnamed_enum_00a0_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>player.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAIAAAAIQEAAAAAAAACAAAAAAQEAAAg=</HashCode>
+      <FileName>player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Word">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Word::cmp_position" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>word.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Word::compare_word_with_name" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>word.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <AssociationLine Name="pos" Type="Position">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.46" Y="0.093" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAUACAAAAAAIAAAAAEAAgIAAEAAsAAAAAAgEAAAEAQA=</HashCode>
+      <FileName>word.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="pos" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HealingWord">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>word.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BombWord">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAABAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>word.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompleteHealingWord">
+    <Position X="6.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEAAAAAAABAAAAIAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>word.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeathBombWord">
+    <Position X="8.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAABAAAAIAAAAAAAAAAAAAACAAEAAA=</HashCode>
+      <FileName>word.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Position">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAgAAAAAQAAAAAAAAIAAAJgAAAAAAA=</HashCode>
+      <FileName>word.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
