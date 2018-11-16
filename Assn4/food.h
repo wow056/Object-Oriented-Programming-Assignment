@@ -18,13 +18,7 @@ public:
 		Water = 0x080,
 		MilkFoam = 0x100
 	};
-	enum Error {
-		BaseAlready,
-		BaseWrong,
-		IngredientFirst,
-		IngredientRepeat,
-		IngredientWrong
-	};
+	
 	static void set_output_stream(std::ostream *out_stream);
 
 	bool provide() const;
@@ -34,6 +28,14 @@ public:
 	virtual void add_ingredient(Ingredient ingredient) = 0;
 	virtual void print_name() const;
 protected:
+	enum Error {
+		BaseAlready,
+		BaseWrong,
+		IngredientFirst,
+		IngredientRepeat,
+		IngredientWrong
+	};
+
 	Food(const std::string & food_name);
 
 	static std::ostream *out;
