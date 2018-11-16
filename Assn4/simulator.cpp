@@ -7,7 +7,7 @@
 using namespace std;
 
 Simulator::Simulator(std::ostream *output_stream, std::istream *input_stream)
-	:out(*output_stream), in(*input_stream), correct_food(0), min_selection(0), start_time(0)
+	:out(*output_stream), in(*input_stream), correct_food(0), min_selection(0), start_time(0), user_selection(0)
 {
 	Food::set_output_stream(output_stream);
 	srand(time(NULL));
@@ -207,7 +207,7 @@ void Simulator::provide()
 
 void Simulator::printResult() const
 {
-	out << "<Resut>" << endl;
+	out << "<Result>" << endl;
 	out << "# of correctly provided food: " << correct_food << endl;
 	out << "# of wronly provided food: " << MaxOrderList - correct_food << endl;
 	out << "Minimum # of selection: " << min_selection << endl;
