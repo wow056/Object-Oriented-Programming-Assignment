@@ -1,141 +1,299 @@
 #include "Food.h"
 
-#include <string>
 #include <iostream>
 
 using namespace std;
 
-bool Food::provide()
+ostream * Food::out = &cout;
+
+void Food::set_output_stream(std::ostream * out_stream)
 {
-	return data == complete_data;
+	out = out_stream;
 }
 
-void Food::add_base(int foodstuff)
+void Food::set_ingredient_flag(bool & ingredient_flag, int ingredient_enum)
 {
-	if (is_base(foodstuff))
+	if (base_complete())
 	{
-		set_data(foodstuff);
-	}
-	else
-	{
-		print_error(Error::)
-	}
-}
-
-bool Food::is_base(int input)
-{
-	return (Base::Dough|Base::Espresso) & input;
-}
-
-void Food::set_data(int input)
-{
-	if (data | input)
-	{
-		if ((input | Base::Dough) || (input | Base::Espresso))
+		if (ingredient_flag)
 		{
-			print_error(Error::BaseAlready, input);
+			print_error(Error::IngredientRepeat, ingredient_enum);
 		}
 		else
 		{
-			print_error(Error::IngredientRepeat, input);
+			ingredient_flag = true;
+			*out << ": You added ingredient [" << food_name(ingredient_enum) << "]" << endl;
 		}
 	}
 	else
 	{
-		data |= input;
+		print_error(Error::IngredientFirst, ingredient_enum);
 	}
 }
 
-void Food::print_error(Error error, int input_food)
+void Food::print_error(Error error, int foodstuff)
 {
-	string input;
-	switch (input_food)
-	{
-	case Food::Pepperoni:
-		input = "Pepperoni";
-		break;
-	case Food::Potato:
-		input = "Potato";
-		break;
-	case Food::Shrimp:
-		input = "Shrimp";
-		break;
-	case Food::Water:
-		input = "Water";
-		break;
-	case Food::MilkFoam:
-		input = "Milk Foam";
-		break;
-	case Food::Dough:
-		input = "Pizza Dough";
-		break;
-	case Food::Espresso:
-		input = "Espresso";
-		break;
-	}
-	cout << "[Wrong] ";
+	string output_food = food_name(foodstuff);
+	*out << ": [Wrong] ";
 	switch (error)
 	{
 	case Food::BaseAlready:
-		cout << "You already added base " << '[' << input << ']';
+		*out << "You already added base [" << output_food << ']';
 		break;
 	case Food::BaseWrong:
-		cout << "Wrong Base";
+		*out << "Wrong Base";
 		break;
 	case Food::IngredientFirst:
-		cout << "Select Base First";
+		*out << "Select Base First";
 		break;
 	case Food::IngredientRepeat:
-		cout << "You already added ingredient " << '[' << input << ']';
+		*out << "You already added ingredient [" << output_food << ']';
 		break;
 	case Food::IngredientWrong:
-		cout << "You should not add ingredient " << '[' << input << ']';
+		*out << "You should not add ingredient [" << output_food << ']';
 		break;
 	}
-	cout << endl;
+	*out << endl;
 }
 
-void Pizza::add_base(int foodstuff)
+string Food::food_name(int food_const)
 {
-	if (foodstuff | Base::Dough)
+	switch (food_const)
 	{
-		set_data(foodstuff);
-	}
-	else
-	{
-		print_error(Error::BaseWrong, foodstuff);
-	}
-}
-
-void Coffee::add_base(int foodstuff)
-{
-	if (foodstuff | Base::Espresso)
-	{
-		set_data(foodstuff);
-	}
-	else
-	{
-		print_error(Error::BaseWrong, foodstuff);
+	case Food::Pepperoni:
+		return "Pepperoni";
+	case Food::Potato:
+		return "Potato";
+	case Food::Shrimp:
+		return "Shrimp";
+	case Food::Water:
+		return "Water";
+	case Food::MilkFoam:
+		return "Milk Foam";
+	case Food::Dough:
+		return "Pizza Dough";
+	case Food::Espresso:
+		return "Espresso";
 	}
 }
 
-void Pepperoni::add_ingredient(int foodstuff)
+
+Pepperoni::Pepperoni()
+	:Pizza("PepperoniPizza"), pepperoni(false) {}
+
+int Pepperoni::num_of_selection()
 {
-	if (is_base(foodstuff))
+	return 2;
+}
+
+void Pepperoni::add_ingredient(Ingredient ingredient)
+{
+	switch (ingredient)
 	{
-		print_error(Error::IngredientFirst, foodstuff);
-	}
-	else if (foodstuff | Ingredient::Pepperoni)
-	{
-		set_data(foodstuff);
-	}
-	else
-	{
-		print_error(Error::IngredientWrong, foodstuff);
+	case Food::Pepperoni:
+		set_ingredient_flag(pepperoni, ingredient);
+		break;
+	case Food::Potato:
+	case Food::Shrimp:
+	case Food::Water:
+	case Food::MilkFoam:
+		print_error(Error::IngredientWrong, ingredient);
+		break;
 	}
 }
 
-bool Pepperoni::provide()
+bool Food::provide() const
 {
-	return (Base::Dough | Ingredient::Pepperoni) & data;
+	return ingredient_complete() && base_complete();
+}
+
+void Food::print_name() const
+{
+	*out << name;
+}
+
+Food::Food(const std::string & food_name)
+	:name(food_name) {}
+
+bool Pepperoni::ingredient_complete() const
+{
+	return pepperoni;
+}
+
+Pizza::Pizza(const std::string & food_name)
+	:Food(food_name), dough(false) {}
+
+bool Pizza::base_complete() const
+{
+	return dough;
+}
+
+void Pizza::add_base(Base base)
+{
+	switch (base)
+	{
+	case Food::Dough:
+		if (base_complete())
+		{
+			print_error(Error::BaseAlready, base);
+		}
+		else
+		{
+			dough = true;
+			*out << ": You added base [Pizza Dough]" << endl;
+		}
+		break;
+	case Food::Espresso:
+		print_error(Error::BaseWrong, base);
+		break;
+	}
+}
+
+Coffee::Coffee(const std::string & food_name)
+	:Food(food_name), espresso(false) {}
+
+bool Coffee::base_complete() const
+{
+	return espresso;
+}
+
+void Coffee::add_base(Base base)
+{
+	switch (base)
+	{
+	case Food::Dough:
+		print_error(Error::BaseWrong, base);
+		break;
+	case Food::Espresso:
+		if (base_complete())
+		{
+			print_error(Error::BaseAlready, base);
+		}
+		else
+		{
+			espresso = true;
+			*out << ": You added base [Espresso]" << endl;
+		}
+		break;
+	}
+}
+
+bool Potato::ingredient_complete() const
+{
+	return potato;
+}
+
+Potato::Potato()
+	:Pizza("PotatoPizza"), potato(false) {}
+
+int Potato::num_of_selection()
+{
+	return 2;
+}
+
+void Potato::add_ingredient(Ingredient ingredient)
+{
+	switch (ingredient)
+	{
+	case Food::Potato:
+		set_ingredient_flag(potato, ingredient);
+		break;
+	case Food::Shrimp:
+	case Food::Water:
+	case Food::MilkFoam:
+	case Food::Pepperoni:
+		print_error(Error::IngredientWrong, ingredient);
+		break;
+	}
+}
+
+bool Shrimp::ingredient_complete() const
+{
+	return pepperoni && shrimp;
+}
+
+Shrimp::Shrimp()
+	:Pizza("ShrimpPizza"), pepperoni(false), shrimp(false) {}
+
+int Shrimp::num_of_selection()
+{
+	return 3;
+}
+
+void Shrimp::add_ingredient(Ingredient ingredient)
+{
+	switch (ingredient)
+	{
+	case Food::Pepperoni:
+		set_ingredient_flag(pepperoni, ingredient);
+			break;
+	case Food::Shrimp:
+		set_ingredient_flag(shrimp, ingredient);
+			break;
+	case Food::Potato:
+	case Food::Water:
+	case Food::MilkFoam:
+		print_error(Error::IngredientWrong, ingredient);
+		break;
+	}
+}
+
+bool Americano::ingredient_complete() const
+{
+	return water;
+}
+
+Americano::Americano()
+	:Coffee("Americano"), water(false) {}
+
+int Americano::num_of_selection()
+{
+	return 2;
+}
+
+void Americano::add_ingredient(Ingredient ingredient)
+{
+	switch (ingredient)
+	{
+	case Food::Water:
+		set_ingredient_flag(water, ingredient);
+		break;
+	case Food::Pepperoni:
+	case Food::Potato:
+	case Food::Shrimp:
+	case Food::MilkFoam:
+		print_error(Error::IngredientWrong, ingredient);
+		break;
+	}
+}
+
+bool Macchiato::ingredient_complete() const
+{
+	return milk_foam;
+}
+
+Macchiato::Macchiato()
+	:Coffee("Macchiato"), milk_foam(false) {}
+
+int Macchiato::num_of_selection()
+{
+	return 2;
+}
+
+void Macchiato::add_ingredient(Ingredient ingredient)
+{
+	switch (ingredient)
+	{
+	case Food::MilkFoam:
+		set_ingredient_flag(milk_foam,ingredient);
+		break;
+	case Food::Pepperoni:
+	case Food::Potato:
+	case Food::Shrimp:
+	case Food::Water:
+		print_error(Error::IngredientWrong, ingredient);
+		break;
+	default:
+		break;
+	}
 }
